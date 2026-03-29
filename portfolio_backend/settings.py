@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'storages',
+    # 'storages', # Removed AWS S3
     'authentication',
     'projects',
     'blogs',
@@ -65,14 +65,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio_backend.wsgi.application'
 
+# AWS RDS Configuration (Commented out for Render deployment)
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('DB_NAME', default='dummy'),
+#         'USER': config('DB_USER', default='dummy'),
+#         'PASSWORD': config('DB_PASSWORD', default='dummy'),
+#         'HOST': config('DB_HOST', default='dummy'),
+#         'PORT': config('DB_PORT', default='5432'),
+#     }
+# }
+
+# Default SQLite database for Render deployment
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', default='dummy'),
-        'USER': config('DB_USER', default='dummy'),
-        'PASSWORD': config('DB_PASSWORD', default='dummy'),
-        'HOST': config('DB_HOST', default='dummy'),
-        'PORT': config('DB_PORT', default='5432'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -92,14 +101,20 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='dummy')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='dummy')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default='dummy')
-AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='us-east-1')
-AWS_DEFAULT_ACL = 'public-read'
-AWS_S3_FILE_OVERWRITE = False
-MEDIA_URL = f'https://{config("AWS_STORAGE_BUCKET_NAME", default="dummy")}.s3.amazonaws.com/media/'
+# --- AWS Configuration (Commented out for Render) ---
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='dummy')
+# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='dummy')
+# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default='dummy')
+# AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='us-east-1')
+# AWS_DEFAULT_ACL = 'public-read'
+# AWS_S3_FILE_OVERWRITE = False
+# MEDIA_URL = f'https://{config("AWS_STORAGE_BUCKET_NAME", default="dummy")}.s3.amazonaws.com/media/'
+# ----------------------------------------------------
+
+# Default local media storage
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
