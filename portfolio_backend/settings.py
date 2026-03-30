@@ -1,6 +1,7 @@
 """
 Django settings for portfolio_backend project.
 """
+import nt
 import os
 from pathlib import Path
 from decouple import config
@@ -10,7 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='dummy-secret')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1').split(',')
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000').split(',')
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost:3000').split(',')
 
 # Render specific
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
@@ -27,7 +30,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    # 'storages', # Removed AWS S3
+     'storages', 
     'authentication',
     'projects',
     'blogs',
@@ -65,25 +68,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio_backend.wsgi.application'
 
-# AWS RDS Configuration (Commented out for Render deployment)
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': config('DB_NAME', default='dummy'),
-#         'USER': config('DB_USER', default='dummy'),
-#         'PASSWORD': config('DB_PASSWORD', default='dummy'),
-#         'HOST': config('DB_HOST', default='dummy'),
-#         'PORT': config('DB_PORT', default='5432'),
-#     }
-# }
+DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql',
+         'NAME': config('DB_NAME', default='postgres'),
+         'USER': config('DB_USER', default='postgres'),
+         'PASSWORD': config('DB_PASSWORD', default='postgressaad'),
+         'HOST': config('DB_HOST', default='database-1.cehow80gicmq.us-east-1.rds.amazonaws.com'),
+         'PORT': config('DB_PORT', default='5432'),
+     }
+ }
 
 # Default SQLite database for Render deployment
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
@@ -102,19 +99,17 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # --- AWS Configuration (Commented out for Render) ---
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='dummy')
-# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='dummy')
-# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default='dummy')
-# AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='us-east-1')
-# AWS_DEFAULT_ACL = 'public-read'
-# AWS_S3_FILE_OVERWRITE = False
-# MEDIA_URL = f'https://{config("AWS_STORAGE_BUCKET_NAME", default="dummy")}.s3.amazonaws.com/media/'
-# ----------------------------------------------------
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='dummy')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='dummy')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default='dummy')
+AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='us-east-1')
+AWS_DEFAULT_ACL = 'public-read'
+AWS_S3_FILE_OVERWRITE = False
+MEDIA_URL = f'https://{config("AWS_STORAGE_BUCKET_NAME", default="bucket-for-portfolio-data")}.s3.amazonaws.com/media/'
 
-# Default local media storage
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
