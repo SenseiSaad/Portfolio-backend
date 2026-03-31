@@ -1,7 +1,7 @@
 """
 Django settings for portfolio_backend project.
 """
-import nt
+
 import os
 from pathlib import Path
 from decouple import config

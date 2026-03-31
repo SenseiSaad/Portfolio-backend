@@ -1,0 +1,44 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH into EC2 and deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/django_portfolio_backend
+            git pull origin main
+            docker compose down
+            docker compose up -d --build
+```
+
+---
+
+**Now do these 3 things in settings.py:**
+
+1. Delete `import nt` — line 2
+2. Remove `npm==9.8.0` from `requirements.txt`
+3. Make sure `STATIC_ROOT = BASE_DIR / 'staticfiles'` is set (it already is ✅)
+
+---
+
+**Next steps after files are in place:**
+```
+1. Test locally → docker compose up --build
+2. If works → push to GitHub
+3. Launch EC2 (Ubuntu 22.04), assign Elastic IP
+4. SSH in → install Docker → clone repo → create .env → docker compose up -d
+5. Add GitHub Secrets (EC2_HOST, EC2_USER, EC2_SSH_KEY)
+6. Point Route 53 api.slancer.site → Elastic IP
+7. Add SSL with Certbot
