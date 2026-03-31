@@ -13,7 +13,7 @@ class Project(models.Model):
     github_link=models.URLField()
     live_link=models.URLField()
     image = models.ImageField(upload_to='projects/', null=True, blank=True)
-    created_at=models.DateTimeField(auto_now_add=True)
+    
     
 
     def __str__(self):
