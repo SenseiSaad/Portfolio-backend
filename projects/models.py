@@ -12,7 +12,6 @@ class Project(models.Model):
     tech_stack=models.CharField(max_length=500)
     github_link=models.URLField()
     live_link=models.URLField()
-    image = models.ImageField(upload_to='projects/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
