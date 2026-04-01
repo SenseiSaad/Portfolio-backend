@@ -9,12 +9,11 @@ class Project(models.Model):
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='personal')
     title=models.CharField(max_length=200)
     description=models.TextField()
-    tech_stack=models.CharField()
+    tech_stack=models.CharField(max_length=500)
     github_link=models.URLField()
     live_link=models.URLField()
     image = models.ImageField(upload_to='projects/', null=True, blank=True)
-    
-    
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.title

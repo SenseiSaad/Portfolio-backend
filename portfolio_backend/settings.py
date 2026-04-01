@@ -12,7 +12,7 @@ SECRET_KEY = config('SECRET_KEY', default='dummy-secret')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = [h.strip() for h in config('ALLOWED_HOSTS', default='127.0.0.1').split(',') if h.strip()]
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000').split(',')
+# CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000').split(',')
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost:3000').split(',')
 
 # Render specific
@@ -69,15 +69,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'portfolio_backend.wsgi.application'
 
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.postgresql',
-         'NAME': config('DB_NAME', default='postgres'),
-         'USER': config('DB_USER', default='postgres'),
-         'PASSWORD': config('DB_PASSWORD', default='postgressaad'),
-         'HOST': config('DB_HOST', default='database-1.cehow80gicmq.us-east-1.rds.amazonaws.com'),
-         'PORT': config('DB_PORT', default='5432'),
-     }
- }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+
 
 # Default SQLite database for Render deployment
 
@@ -118,7 +116,8 @@ REST_FRAMEWORK = {
     ),
 }
 
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000,http://127.0.0.1:3000').split(',')
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000,http://127.0.0.1:3000').split(',')
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost:3000,http://127.0.0.1:3000').split(',')
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
