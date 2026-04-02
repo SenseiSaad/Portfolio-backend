@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=200)),
                 ('description', models.TextField()),
-                ('tech_stack', models.CharField()),
+                ('tech_stack', models.CharField(max_length=500)),
                 ('github_link', models.URLField()),
                 ('live_link', models.URLField()),
                 ('image_url', models.URLField()),
