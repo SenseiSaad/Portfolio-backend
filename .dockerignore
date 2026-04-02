@@ -5,5 +5,10 @@ node_modules
 *.pyc
 venv
 .venv
+env
+.env
 .DS_Store
 *.sqlite3
+data/
+media/
+staticfiles/
