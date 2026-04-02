@@ -50,3 +50,6 @@ def deleteproject(request, pk):
     project = Project.objects.get(id=pk)
     project.delete()
     return Response({'message': 'Project was deleted'})
+
+
+#
