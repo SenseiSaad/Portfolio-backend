@@ -9,6 +9,7 @@ services:
       - .env
     volumes:
       - static_volume:/app/staticfiles
+      - sqlite_data:/app/data
     restart: always
     networks:
       - app_network
@@ -30,6 +31,7 @@ services:
 
 volumes:
   static_volume:
+  sqlite_data:
 
 networks:
   app_network:

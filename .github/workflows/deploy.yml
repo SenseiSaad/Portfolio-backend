@@ -22,6 +22,7 @@ jobs:
             cd ~/Portfolio-backend &&
             git fetch origin &&
             git reset --hard origin/main &&
+            git clean -f Backend/projects/migrations/ Backend/blogs/migrations/ Backend/contacts/migrations/ &&
             sudo docker compose down &&
             sudo docker compose up -d --build
           "
