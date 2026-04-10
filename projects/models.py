@@ -8,7 +8,7 @@ class Project(models.Model):
     ]
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='personal')
     title=models.CharField(max_length=200)
-    short_description=models.CharField(max_length=300)
+    short_description=models.CharField(max_length=300, default='', blank=True)
     description=models.TextField()
     tech_stack=models.CharField(max_length=500)
     github_link=models.URLField()
