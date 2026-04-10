@@ -7,7 +7,7 @@ def home_view(request):
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Portfolio Backend - Essensor</title>
+        <title>slancer Portfolio Backend</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -50,7 +50,7 @@ def home_view(request):
     </head>
     <body>
         <div class="container">
-            <h1>Welcome to the Portfolio Backend of the Essensor Website</h1>
+            <h1>Welcome to the slancer Portfolio Backend</h1>
             <p>This is the Django backend gateway. Everything is working fine!</p>
             <p>You can manage your projects, blogs, and content from the admin panel.</p>
             <a href="/admin/" class="btn">Click here to Login to the Admin Page</a>
